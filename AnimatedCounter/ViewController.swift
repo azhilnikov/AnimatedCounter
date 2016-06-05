@@ -14,8 +14,12 @@ class ViewController: UIViewController, TimerDelegate {
     
     private var counterState = CounterState.Stopped
     private var timer = Timer()
-    private var formatString: String!
     private var counterTimeout = 0.5
+    private lazy var formatString: String = {
+        [unowned self] in
+        // Format string containing necessary number of leading zeroes
+        return "%0" + String(self.digitsView.count) + "d"
+    }()
     
     private var counterValue = 0 {
         didSet {
@@ -57,8 +61,6 @@ class ViewController: UIViewController, TimerDelegate {
         
         // Set delegate
         timer.delegate = self
-        // Format string containing necessary number of leading zeroes
-        formatString = "%0" + String(digitsView.count) + "d"
     }
 
     override func didReceiveMemoryWarning() {
